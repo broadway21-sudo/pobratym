@@ -78,6 +78,4 @@ For safety-sensitive problems, do not publish personal crisis details in a GitHu
 
 ## License
 
-Licensed under the [Apache License 2.0](LICENSE).
-
-The license permits reuse of the software; it does not certify the project as clinically validated, medically appropriate, or ready for unsupervised real-world crisis support.
+This project is licensed under the Apache License 2.0. See [LICENSE](LICENSE).

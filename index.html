@@ -102,6 +102,14 @@
             </span>
             <span class="exercise-banner-arrow" aria-hidden="true">→</span>
           </button>
+          <button class="silent-banner" data-go="signal" type="button">
+            <span class="silent-pulse" aria-hidden="true"><i></i></span>
+            <span>
+              <small>Ексклюзивний режим · без слів</small>
+              <strong>Тихий сигнал побратиму за три дотики</strong>
+            </span>
+            <span class="exercise-banner-arrow" aria-hidden="true">→</span>
+          </button>
         </div>
       </section>
 
@@ -136,6 +144,7 @@
           <button data-message="Не можу заснути">Не можу заснути</button>
           <button data-message="Просто послухай">Просто послухай</button>
           <button data-go="exercises">Спробувати вправу</button>
+          <button data-go="signal">Не можу говорити</button>
         </div>
 
         <form class="composer" id="chatForm">
@@ -195,6 +204,65 @@
         <div class="exercise-footer">
           <p>Вправи можуть трохи зменшити інтенсивність стану, але не лікують панічний розлад чи ПТСР. Якщо напади повторюються або змінюють твоє життя, варто поговорити з фахівцем.</p>
           <button class="secondary-button" data-go="help" type="button">Знайти живу допомогу</button>
+        </div>
+      </section>
+
+      <section class="screen" id="signal" aria-labelledby="signalTitle">
+        <div class="signal-layout">
+          <div class="signal-intro">
+            <span class="section-kicker">Тихий сигнал</span>
+            <h1 id="signalTitle">Не треба<br>пояснювати.</h1>
+            <p>Три дотики — і готове коротке повідомлення людині, якій довіряєш. Усе формується лише на цьому пристрої.</p>
+            <div class="signal-privacy"><span>✓</span> Без імені, геолокації та збереження</div>
+          </div>
+
+          <div class="signal-builder">
+            <div class="signal-step active" data-signal-step="state">
+              <div class="signal-step-head"><span>1 / 3</span><h2>Що з тобою?</h2></div>
+              <div class="signal-options">
+                <button data-signal-value="state:Мене накриває паніка" type="button"><span>≈</span>Паніка</button>
+                <button data-signal-value="state:Мене повернуло у важкий спогад" type="button"><span>⌖</span>Флешбек</button>
+                <button data-signal-value="state:Я ніби нічого не відчуваю" type="button"><span>○</span>Порожнеча</button>
+                <button data-signal-value="state:У мене сильна злість і напруга" type="button"><span>↟</span>Злість</button>
+                <button data-signal-value="state:Мені дуже важко, але я не можу пояснити" type="button"><span>···</span>Не знаю</button>
+                <button class="danger-option" data-signal-danger type="button"><span>!</span>Я в небезпеці</button>
+              </div>
+            </div>
+
+            <div class="signal-step" data-signal-step="level" hidden>
+              <div class="signal-step-head"><span>2 / 3</span><h2>Наскільки сильно?</h2></div>
+              <div class="intensity-display"><strong id="intensityValue">5</strong><span>з 10</span></div>
+              <input class="intensity-range" id="intensityRange" type="range" min="1" max="10" value="5" aria-label="Інтенсивність стану від 1 до 10">
+              <div class="range-labels"><span>Терпимо</span><span>Дуже сильно</span></div>
+              <button class="signal-next primary-button" id="intensityNext" type="button">Далі <span>→</span></button>
+            </div>
+
+            <div class="signal-step" data-signal-step="need" hidden>
+              <div class="signal-step-head"><span>3 / 3</span><h2>Що зробити?</h2></div>
+              <div class="signal-needs">
+                <button data-signal-value="need:Будь ласка, подзвони мені зараз" type="button">Подзвони мені</button>
+                <button data-signal-value="need:Побудь зі мною на зв’язку, без зайвих запитань" type="button">Побудь на зв’язку</button>
+                <button data-signal-value="need:Якщо можеш, прийди або знайди когось поруч зі мною" type="button">Будь поруч фізично</button>
+                <button data-signal-value="need:Допоможи мені зв’язатися з фахівцем" type="button">Допоможи знайти фахівця</button>
+              </div>
+            </div>
+
+            <div class="signal-step signal-result" data-signal-step="result" hidden>
+              <div class="signal-step-head"><span>Готово</span><h2>Твоє повідомлення</h2></div>
+              <div class="signal-message">
+                <span class="signal-message-mark">П</span>
+                <p id="signalMessage"></p>
+              </div>
+              <div class="signal-actions">
+                <button class="primary-button" id="shareSignal" type="button">Поділитися <span>↗</span></button>
+                <button class="secondary-button" id="copySignal" type="button">Скопіювати</button>
+              </div>
+              <button class="signal-reset" id="resetSignal" type="button">Створити інший сигнал</button>
+              <p class="signal-note">«Побратим» нічого не надсилає сам. Ти обираєш людину й підтверджуєш відправлення.</p>
+            </div>
+
+            <button class="signal-back" id="signalBack" type="button" hidden>← Назад</button>
+          </div>
         </div>
       </section>
 

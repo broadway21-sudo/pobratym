@@ -15,6 +15,18 @@ const exerciseVisual = document.querySelector("#exerciseVisual");
 const exerciseVisualText = document.querySelector("#exerciseVisualText");
 const exerciseNext = document.querySelector("#exerciseNext");
 const exerciseBack = document.querySelector("#exerciseBack");
+const signalSteps = [...document.querySelectorAll(".signal-step")];
+const intensityRange = document.querySelector("#intensityRange");
+const intensityValue = document.querySelector("#intensityValue");
+const signalMessage = document.querySelector("#signalMessage");
+const signalBack = document.querySelector("#signalBack");
+
+const signalData = {
+  state: "",
+  level: 5,
+  need: ""
+};
+let currentSignalStep = "state";
 
 const exercises = {
   grounding: {
@@ -124,6 +136,10 @@ function goToScreen(id) {
   if (id === "chat") {
     setTimeout(() => chatInput.focus(), 350);
   }
+
+  if (id === "signal") {
+    resetSignal();
+  }
 }
 
 document.addEventListener("click", (event) => {
@@ -147,6 +163,15 @@ document.addEventListener("click", (event) => {
 
   const exerciseButton = event.target.closest("[data-exercise]");
   if (exerciseButton) openExercise(exerciseButton.dataset.exercise);
+
+  const signalChoice = event.target.closest("[data-signal-value]");
+  if (signalChoice) {
+    const [key, ...valueParts] = signalChoice.dataset.signalValue.split(":");
+    signalData[key] = valueParts.join(":");
+    showSignalStep(key === "state" ? "level" : "result");
+  }
+
+  if (event.target.closest("[data-signal-danger]")) openCrisis();
 });
 
 function addMessage(textParts, sender = "assistant") {
@@ -416,3 +441,76 @@ function showToast(text) {
   clearTimeout(showToast.timer);
   showToast.timer = setTimeout(() => toast.classList.remove("show"), 2400);
 }
+
+function showSignalStep(step) {
+  currentSignalStep = step;
+  signalSteps.forEach((element) => {
+    element.hidden = element.dataset.signalStep !== step;
+  });
+  signalBack.hidden = step === "state" || step === "result";
+
+  if (step === "result") {
+    const levelText = signalData.level >= 8
+      ? `Стан дуже сильний — ${signalData.level}/10.`
+      : `Зараз це приблизно ${signalData.level}/10.`;
+    signalMessage.textContent = `${signalData.state}. ${levelText} ${signalData.need}. Мені не треба все пояснювати — просто дай знати, що ти поруч.`;
+  }
+}
+
+function resetSignal() {
+  signalData.state = "";
+  signalData.level = 5;
+  signalData.need = "";
+  intensityRange.value = "5";
+  intensityValue.textContent = "5";
+  showSignalStep("state");
+}
+
+intensityRange.addEventListener("input", () => {
+  signalData.level = Number(intensityRange.value);
+  intensityValue.textContent = intensityRange.value;
+});
+
+document.querySelector("#intensityNext").addEventListener("click", () => {
+  signalData.level = Number(intensityRange.value);
+  showSignalStep("need");
+});
+
+signalBack.addEventListener("click", () => {
+  if (currentSignalStep === "need") showSignalStep("level");
+  else if (currentSignalStep === "level") showSignalStep("state");
+});
+
+document.querySelector("#resetSignal").addEventListener("click", resetSignal);
+
+document.querySelector("#copySignal").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(signalMessage.textContent);
+    showToast("Тихий сигнал скопійовано");
+  } catch {
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(signalMessage);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    showToast("Виділено текст — натисни «Копіювати»");
+  }
+});
+
+document.querySelector("#shareSignal").addEventListener("click", async () => {
+  const text = signalMessage.textContent;
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: "Тихий сигнал", text });
+    } catch (error) {
+      if (error.name !== "AbortError") showToast("Не вдалося відкрити меню поширення");
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast("Сигнал скопійовано — надішли його довіреній людині");
+    } catch {
+      showToast("Скопіюй текст сигналу вручну");
+    }
+  }
+});

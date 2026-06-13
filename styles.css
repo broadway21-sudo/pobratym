@@ -253,6 +253,29 @@ main { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 .exercise-banner small { margin-bottom: 4px; color: rgba(255,255,255,.55); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
 .exercise-banner strong { font-size: 14px; }
 .exercise-banner-arrow { color: var(--lime); font-size: 24px; }
+.silent-banner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  padding: 20px 23px;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255,254,248,.7);
+  cursor: pointer;
+}
+.silent-banner small, .silent-banner strong { display: block; }
+.silent-banner small { margin-bottom: 4px; color: var(--muted); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.silent-banner strong { font-size: 14px; }
+.silent-banner .exercise-banner-arrow { color: var(--forest); }
+.silent-pulse { position: relative; width: 45px; height: 45px; display: grid; place-items: center; border-radius: 50%; background: var(--forest); }
+.silent-pulse::before, .silent-pulse::after { content: ""; position: absolute; width: 19px; height: 19px; border: 1px solid var(--lime); border-radius: 50%; animation: silentWave 2.4s ease-out infinite; }
+.silent-pulse::after { animation-delay: .8s; }
+.silent-pulse i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); }
+@keyframes silentWave { from { opacity: .8; transform: scale(.5); } to { opacity: 0; transform: scale(1.9); } }
 
 .bottom-nav {
   position: fixed;
@@ -371,6 +394,56 @@ main { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 .exercise-footer { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin: 30px 0 100px; padding: 25px; border-radius: 20px; background: var(--paper-deep); }
 .exercise-footer p { max-width: 760px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
 
+.signal-layout { min-height: calc(100vh - 180px); display: grid; grid-template-columns: .78fr 1.22fr; align-items: center; gap: 70px; padding: 45px 0 90px; }
+.signal-intro h1 { margin: 13px 0 24px; font-size: clamp(58px, 7vw, 92px); line-height: .92; letter-spacing: -.065em; }
+.signal-intro > p { max-width: 440px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+.signal-privacy { display: flex; align-items: center; gap: 9px; margin-top: 25px; color: var(--muted); font-size: 10px; font-weight: 700; }
+.signal-privacy span { width: 22px; height: 22px; display: grid; place-items: center; color: var(--forest); border-radius: 50%; background: var(--lime-soft); }
+.signal-builder { position: relative; min-height: 520px; padding: 34px; border-radius: 32px; background: var(--forest); box-shadow: var(--shadow); }
+.signal-step[hidden] { display: none; }
+.signal-step-head { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; margin-bottom: 28px; color: var(--white); }
+.signal-step-head span { color: var(--lime); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.signal-step-head h2 { margin: 0; font-size: 30px; letter-spacing: -.04em; }
+.signal-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.signal-options button, .signal-needs button {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 82px;
+  padding: 15px;
+  color: var(--white);
+  text-align: left;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 17px;
+  background: rgba(255,255,255,.06);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s ease;
+}
+.signal-options button:hover, .signal-needs button:hover { color: var(--forest); border-color: var(--lime); background: var(--lime); transform: translateY(-2px); }
+.signal-options button span { width: 31px; height: 31px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 10px; background: rgba(255,255,255,.1); font-size: 16px; }
+.signal-options .danger-option { color: #ffb0a9; border-color: rgba(255,111,99,.32); }
+.signal-options .danger-option:hover { color: white; border-color: var(--danger); background: var(--danger); }
+.intensity-display { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin: 55px 0 35px; color: var(--white); }
+.intensity-display strong { color: var(--lime); font-size: 110px; line-height: .8; letter-spacing: -.08em; }
+.intensity-display span { color: rgba(255,255,255,.5); font-size: 13px; }
+.intensity-range { width: 100%; accent-color: var(--lime); cursor: pointer; }
+.range-labels { display: flex; justify-content: space-between; margin-top: 10px; color: rgba(255,255,255,.44); font-size: 9px; }
+.signal-next { width: 100%; justify-content: space-between; margin-top: 62px; color: var(--forest); background: var(--lime); }
+.signal-needs { display: grid; gap: 10px; }
+.signal-needs button { min-height: 68px; }
+.signal-message { display: grid; grid-template-columns: auto 1fr; gap: 14px; padding: 21px; border-radius: 20px; background: var(--white); }
+.signal-message-mark { width: 37px; height: 37px; display: grid; place-items: center; color: var(--forest); border-radius: 50%; background: var(--lime); font-size: 12px; font-weight: 800; }
+.signal-message p { margin: 0; color: var(--ink); font-size: 15px; line-height: 1.65; white-space: pre-wrap; }
+.signal-actions { display: grid; grid-template-columns: 1.2fr 1fr; gap: 9px; margin-top: 14px; }
+.signal-actions .primary-button { justify-content: space-between; color: var(--forest); background: var(--lime); }
+.signal-actions .secondary-button { color: var(--white); border-color: rgba(255,255,255,.15); }
+.signal-reset, .signal-back { color: rgba(255,255,255,.58); border: 0; background: transparent; font-size: 10px; font-weight: 700; cursor: pointer; }
+.signal-reset { width: 100%; margin-top: 18px; }
+.signal-back { position: absolute; left: 34px; bottom: 24px; }
+.signal-note { margin: 16px 0 0; color: rgba(255,255,255,.38); font-size: 9px; line-height: 1.5; text-align: center; }
+
 .principles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; overflow: hidden; margin: 10px 0 100px; border: 1px solid var(--line); border-radius: 28px; background: var(--line); }
 .principles article { min-height: 260px; padding: 32px; background: var(--paper); }
 .principles span { color: #8b948c; font-size: 11px; font-weight: 800; }
@@ -412,6 +485,8 @@ main { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
   .hero-copy { padding-top: 28px; }
   .companion-card { min-height: 430px; }
   .topic-grid { grid-template-columns: repeat(2, 1fr); }
+  .signal-layout { grid-template-columns: 1fr; gap: 40px; }
+  .signal-intro > p { max-width: 650px; }
 }
 
 @media (max-width: 640px) {
@@ -452,6 +527,15 @@ main { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
   .exercise-grid { grid-template-columns: 1fr; }
   .exercise-card { min-height: 315px; }
   .exercise-footer { align-items: stretch; flex-direction: column; }
+  .signal-layout { padding-top: 35px; }
+  .signal-intro h1 { font-size: 58px; }
+  .signal-builder { min-height: 550px; padding: 24px; border-radius: 25px; }
+  .signal-step-head { align-items: flex-start; flex-direction: column; }
+  .signal-step-head h2 { font-size: 27px; }
+  .signal-options { grid-template-columns: 1fr; }
+  .signal-options button { min-height: 62px; }
+  .signal-back { left: 24px; }
+  .signal-actions { grid-template-columns: 1fr; }
   .help-card { min-height: auto; padding: 24px; }
   .help-card h2 { font-size: 24px; }
   .principles article { min-height: 220px; }

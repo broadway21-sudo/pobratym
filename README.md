@@ -28,6 +28,7 @@ The project focuses on:
 - local demo conversation flows for anxiety, insomnia, grief, anger, and guilt;
 - Ukrainian and Russian crisis phrase detection;
 - guided self-help exercises for paced breathing, grounding, muscle release, and orientation;
+- a local-only “Silent Signal” that creates a trusted-contact message in three taps when speaking is difficult;
 - one-tap access to `112`, `103`, and the Ukrainian Veterans Fund crisis line;
 - directory of verified support resources;
 - no accounts, analytics, or server-side conversation storage.

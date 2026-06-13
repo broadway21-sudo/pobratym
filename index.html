@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111914">
+  <meta name="description" content="Побратим — приватний простір підтримки для військових, ветеранів та їхніх близьких.">
+  <title>Побратим — коли треба, щоб хтось був поруч</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="brand" data-go="home" aria-label="На головну">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><path d="M20 5c6.6 0 12 5.4 12 12 0 8.5-12 18-12 18S8 25.5 8 17C8 10.4 13.4 5 20 5Z"/><path d="M14.5 18.5h11M20 13v11"/></svg>
+        </span>
+        <span>Побратим</span>
+      </button>
+      <button class="privacy-pill" id="privacyButton" type="button">
+        <span class="status-dot"></span>
+        Приватний режим
+      </button>
+    </header>
+
+    <main>
+      <section class="screen active" id="home" aria-labelledby="homeTitle">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Тут можна не триматися</div>
+            <h1 id="homeTitle">Коли важко —<br><span>я поруч.</span></h1>
+            <p class="hero-lead">Можеш виговоритися, розкласти думки або просто побути не наодинці. Без оцінок і зайвих запитань.</p>
+            <div class="hero-actions">
+              <button class="primary-button" data-go="chat" type="button">
+                Почати розмову
+                <span aria-hidden="true">→</span>
+              </button>
+              <button class="secondary-button" data-open-crisis type="button">Мені зараз небезпечно</button>
+            </div>
+            <div class="trust-row">
+              <span><i>✓</i> Без реєстрації</span>
+              <span><i>✓</i> Розмова не зберігається</span>
+              <span><i>✓</i> 24/7</span>
+            </div>
+          </div>
+
+          <div class="companion-card" aria-hidden="true">
+            <div class="card-glow"></div>
+            <div class="pulse pulse-one"></div>
+            <div class="pulse pulse-two"></div>
+            <div class="companion-orb">
+              <span class="orb-line line-one"></span>
+              <span class="orb-line line-two"></span>
+              <span class="orb-line line-three"></span>
+            </div>
+            <div class="card-message">
+              <div class="mini-avatar">П</div>
+              <div>
+                <strong>Я тут і слухаю.</strong>
+                <span>Почни з того, що зараз найбільше тисне.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="support-prompt">
+          <div>
+            <span class="section-kicker">Не знаєш, з чого почати?</span>
+            <h2>Обери, що зараз ближче</h2>
+          </div>
+          <div class="topic-grid">
+            <button class="topic-card" data-prompt="Не можу заснути. Думки не відпускають.">
+              <span class="topic-icon moon">◐</span>
+              <strong>Не можу заснути</strong>
+              <small>Думки не відпускають</small>
+            </button>
+            <button class="topic-card" data-prompt="Мене накриває тривога, допоможи заземлитися.">
+              <span class="topic-icon wave">≈</span>
+              <strong>Накриває тривога</strong>
+              <small>Треба повернути контроль</small>
+            </button>
+            <button class="topic-card" data-prompt="Хочу виговоритися. Просто послухай мене.">
+              <span class="topic-icon talk">···</span>
+              <strong>Хочу виговоритися</strong>
+              <small>Просто побудь поруч</small>
+            </button>
+            <button class="topic-card" data-go="help">
+              <span class="topic-icon compass">✣</span>
+              <strong>Потрібна допомога</strong>
+              <small>Знайти фахівця чи службу</small>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen chat-screen" id="chat" aria-labelledby="chatTitle">
+        <div class="chat-header">
+          <button class="back-button" data-go="home" aria-label="Назад">←</button>
+          <div>
+            <span class="section-kicker">Приватна розмова</span>
+            <h2 id="chatTitle">Я поруч</h2>
+          </div>
+          <button class="text-button" id="clearChat" type="button">Очистити</button>
+        </div>
+
+        <div class="chat-notice">
+          <span>i</span>
+          Я — ШІ, а не лікар. Можу вислухати й допомогти знайти наступний крок.
+        </div>
+
+        <div class="messages" id="messages" aria-live="polite">
+          <div class="message-row assistant">
+            <div class="message-avatar">П</div>
+            <div class="message">
+              <p>Привіт. Тут не треба добирати правильні слова.</p>
+              <p>Що зараз із тобою відбувається?</p>
+              <time>зараз</time>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-replies" id="quickReplies">
+          <button data-message="Мені тривожно">Мені тривожно</button>
+          <button data-message="Не можу заснути">Не можу заснути</button>
+          <button data-message="Просто послухай">Просто послухай</button>
+        </div>
+
+        <form class="composer" id="chatForm">
+          <label class="sr-only" for="chatInput">Ваше повідомлення</label>
+          <textarea id="chatInput" rows="1" maxlength="1200" placeholder="Напиши як є..."></textarea>
+          <button class="send-button" type="submit" aria-label="Надіслати">↑</button>
+        </form>
+        <p class="composer-hint">Enter — надіслати · Shift + Enter — новий рядок</p>
+      </section>
+
+      <section class="screen" id="help" aria-labelledby="helpTitle">
+        <div class="page-heading">
+          <span class="section-kicker">Перевірені контакти</span>
+          <h1 id="helpTitle">Допомога поруч</h1>
+          <p>Обери, що потрібно. У критичній ситуації не чекай відповіді в чаті.</p>
+        </div>
+
+        <div class="help-grid">
+          <article class="help-card featured">
+            <span class="help-label">Психологічна підтримка · 24/7</span>
+            <h2>Український ветеранський фонд</h2>
+            <p>Безоплатна кризова підтримка для військових, ветеранів, їхніх близьких та всіх українців.</p>
+            <a href="tel:0800332029" class="call-button">0 800 33 20 29 <span>Подзвонити</span></a>
+            <a href="https://veteranfund.com.ua/projects/hot_line/" target="_blank" rel="noreferrer" class="source-link">Офіційний сайт ↗</a>
+          </article>
+
+          <article class="help-card">
+            <span class="help-label">Екстрена допомога</span>
+            <h2>Негайна небезпека</h2>
+            <p>Якщо є ризик для життя, поранення або ти можеш нашкодити собі чи іншій людині.</p>
+            <div class="number-row">
+              <a href="tel:112">112 <small>єдина служба</small></a>
+              <a href="tel:103">103 <small>швидка допомога</small></a>
+            </div>
+          </article>
+
+          <article class="help-card">
+            <span class="help-label">Пошук фахової допомоги</span>
+            <h2>Всеукраїнська програма «Ти як?»</h2>
+            <p>Гарячі лінії, онлайн- і офлайн-послуги, матеріали самодопомоги та підтримка у громаді.</p>
+            <a href="https://howareu.com/" target="_blank" rel="noreferrer" class="outline-link">Відкрити каталог ↗</a>
+          </article>
+
+          <article class="help-card muted-card">
+            <span class="help-label">Перед дзвінком</span>
+            <h2>Можна сказати лише одне речення</h2>
+            <blockquote>«Мені зараз дуже важко, і я боюся залишатися наодинці».</blockquote>
+            <p>Цього достатньо, щоб розпочати розмову.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen" id="about" aria-labelledby="aboutTitle">
+        <div class="page-heading narrow">
+          <span class="section-kicker">Про сервіс</span>
+          <h1 id="aboutTitle">Підтримка без пафосу</h1>
+          <p>«Побратим» задуманий як перша точка контакту, а не заміна психотерапії, психіатрії чи екстреної допомоги.</p>
+        </div>
+        <div class="principles">
+          <article><span>01</span><h3>Людина керує розмовою</h3><p>Можна говорити, мовчати, змінити тему або завершити чат будь-коли.</p></article>
+          <article><span>02</span><h3>Жодних діагнозів</h3><p>Сервіс слухає, допомагає назвати стан і пропонує безпечні наступні кроки.</p></article>
+          <article><span>03</span><h3>Ескалація до людей</h3><p>За ознак гострої кризи першими стають контакти живої професійної допомоги.</p></article>
+          <article><span>04</span><h3>Мінімум даних</h3><p>Цей прототип не має акаунтів, аналітики та серверного збереження розмов.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Основна навігація">
+      <button class="active" data-go="home"><span>⌂</span>Головна</button>
+      <button data-go="chat"><span>◌</span>Розмова</button>
+      <button data-go="help"><span>+</span>Допомога</button>
+      <button data-go="about"><span>i</span>Про сервіс</button>
+    </nav>
+  </div>
+
+  <div class="modal-backdrop" id="crisisModal" hidden>
+    <section class="crisis-modal" role="dialog" aria-modal="true" aria-labelledby="crisisTitle">
+      <button class="modal-close" id="closeCrisis" aria-label="Закрити">×</button>
+      <span class="crisis-icon">!</span>
+      <span class="section-kicker">Не залишайся з цим наодинці</span>
+      <h2 id="crisisTitle">Зараз важливо зв’язатися з живою людиною</h2>
+      <p>Якщо ти в безпосередній небезпеці або можеш нашкодити собі чи комусь поруч, відійди від зброї та інших небезпечних предметів, поклич людину поруч і зателефонуй:</p>
+      <div class="crisis-actions">
+        <a href="tel:112"><strong>112</strong><span>Екстрена допомога</span></a>
+        <a href="tel:103"><strong>103</strong><span>Швидка допомога</span></a>
+        <a href="tel:0800332029"><strong>0 800 33 20 29</strong><span>Кризовий психолог · 24/7</span></a>
+      </div>
+      <button class="stay-button" id="stayInChat" type="button">Я вже покликав когось, залишитися в чаті</button>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

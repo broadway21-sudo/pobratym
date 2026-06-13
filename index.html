@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#mainContent">Перейти до основного вмісту</a>
   <div class="app-shell">
     <header class="topbar">
       <button class="brand" data-go="home" aria-label="На головну">
@@ -26,7 +27,7 @@
       </button>
     </header>
 
-    <main>
+    <main id="mainContent" tabindex="-1">
       <section class="screen active" id="home" aria-labelledby="homeTitle">
         <div class="hero-grid">
           <div class="hero-copy">

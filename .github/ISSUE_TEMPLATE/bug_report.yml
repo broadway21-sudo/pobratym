@@ -1,0 +1,56 @@
+name: Bug report
+description: Report a reproducible, non-sensitive problem
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include real conversations, personal data, military information, or unpatched safety vulnerabilities. Read SAFETY.md first.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Use fictional data only.
+      placeholder: |
+        1. Open...
+        2. Select...
+        3. Observe...
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Conversation interface
+        - Crisis support interface
+        - Support directory
+        - Accessibility
+        - Mobile layout
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, operating system, device, and viewport if relevant.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I confirm this issue contains no real personal or crisis conversation data.
+          required: true
+        - label: I have read SAFETY.md and this report is appropriate for a public issue.
+          required: true

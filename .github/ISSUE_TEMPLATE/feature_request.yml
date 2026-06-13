@@ -1,0 +1,47 @@
+name: Feature proposal
+description: Propose a product, accessibility, or engineering improvement
+title: "[Proposal]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: user_problem
+    attributes:
+      label: User problem
+      description: Describe the need without including personal or sensitive details.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What should the project do differently?
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Expected impact
+      description: Who benefits, and how would success be measured?
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Safety and privacy considerations
+      description: Describe possible misuse, failure modes, or data implications.
+    validations:
+      required: true
+  - type: dropdown
+    id: roadmap
+    attributes:
+      label: Roadmap area
+      options:
+        - Prototype quality
+        - Reviewed conversation model
+        - Privacy-first backend
+        - Human support network
+        - Limited pilot
+        - Documentation and community
+    validations:
+      required: true

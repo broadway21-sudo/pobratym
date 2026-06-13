@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Safety-sensitive report
+    url: https://github.com/broadway21-sudo
+    about: Arrange a private report for crisis-routing, privacy, or security concerns.

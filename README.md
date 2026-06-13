@@ -1,5 +1,8 @@
 # Pobratym / Побратим
 
+[![Live demo](https://img.shields.io/badge/demo-GitHub%20Pages-c8ef63)](https://broadway21-sudo.github.io/pobratym/)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 **A privacy-first mental health support prototype for Ukrainian service members, veterans, and their families.**
 
 Pobratym is an open-source web prototype designed to provide a calm first point of contact when someone needs to talk, ground themselves during anxiety, or find verified human support.
@@ -27,6 +30,12 @@ The project focuses on:
 - one-tap access to `112`, `103`, and the Ukrainian Veterans Fund crisis line;
 - directory of verified support resources;
 - no accounts, analytics, or server-side conversation storage.
+
+## Live demo
+
+Try the current static prototype at:
+
+**https://broadway21-sudo.github.io/pobratym/**
 
 ## Run locally
 
@@ -69,4 +78,6 @@ For safety-sensitive problems, do not publish personal crisis details in a GitHu
 
 ## License
 
-No production-use license has been selected yet. Until one is added, the repository is available for review and contribution but should not be treated as cleared for deployment.
+Licensed under the [Apache License 2.0](LICENSE).
+
+The license permits reuse of the software; it does not certify the project as clinically validated, medically appropriate, or ready for unsupervised real-world crisis support.

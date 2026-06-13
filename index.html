@@ -94,6 +94,14 @@
               <small>Знайти фахівця чи службу</small>
             </button>
           </div>
+          <button class="exercise-banner" data-go="exercises" type="button">
+            <span class="exercise-banner-icon">◎</span>
+            <span>
+              <small>Практична самодопомога</small>
+              <strong>Вправи, коли накриває паніка або напруга</strong>
+            </span>
+            <span class="exercise-banner-arrow" aria-hidden="true">→</span>
+          </button>
         </div>
       </section>
 
@@ -127,6 +135,7 @@
           <button data-message="Мені тривожно">Мені тривожно</button>
           <button data-message="Не можу заснути">Не можу заснути</button>
           <button data-message="Просто послухай">Просто послухай</button>
+          <button data-go="exercises">Спробувати вправу</button>
         </div>
 
         <form class="composer" id="chatForm">
@@ -135,6 +144,58 @@
           <button class="send-button" type="submit" aria-label="Надіслати">↑</button>
         </form>
         <p class="composer-hint">Enter — надіслати · Shift + Enter — новий рядок</p>
+      </section>
+
+      <section class="screen" id="exercises" aria-labelledby="exercisesTitle">
+        <div class="page-heading exercise-heading">
+          <span class="section-kicker">Самодопомога крок за кроком</span>
+          <h1 id="exercisesTitle">Коли накриває</h1>
+          <p>Обери одну просту вправу. Не треба робити все одразу. Якщо якась практика посилює дискомфорт — зупинися і повернись до звичайного дихання.</p>
+        </div>
+
+        <div class="medical-warning">
+          <span>!</span>
+          <p><strong>Не списуй усе на паніку.</strong> Якщо біль у грудях, задишка, слабкість чи запаморочення для тебе нові, незвичні або посилюються — телефонуй <a href="tel:103">103</a> чи <a href="tel:112">112</a>.</p>
+        </div>
+
+        <div class="exercise-grid">
+          <article class="exercise-card featured-exercise">
+            <div class="exercise-meta"><span>1–2 хв</span><span>Паніка · швидке дихання</span></div>
+            <div class="exercise-symbol breathing-symbol">◯</div>
+            <h2>Повільний видих</h2>
+            <p>М’яко вдихай носом і видихай трохи довше. Без глибоких вдихів і затримки дихання.</p>
+            <button class="exercise-start" data-exercise="breathing" type="button">Почати з ритмом <span>→</span></button>
+          </article>
+
+          <article class="exercise-card">
+            <div class="exercise-meta"><span>2–3 хв</span><span>Паніка · відчуття нереальності</span></div>
+            <div class="exercise-symbol">5</div>
+            <h2>Заземлення 5–4–3–2–1</h2>
+            <p>Повертай увагу до того, що бачиш, відчуваєш і чуєш прямо зараз.</p>
+            <button class="exercise-start" data-exercise="grounding" type="button">Почати вправу <span>→</span></button>
+          </article>
+
+          <article class="exercise-card">
+            <div class="exercise-meta"><span>2 хв</span><span>Напруга · тремтіння</span></div>
+            <div class="exercise-symbol">↧</div>
+            <h2>Опора для тіла</h2>
+            <p>Відчуй поверхню під ногами й по черзі послаб напружені м’язи без болю.</p>
+            <button class="exercise-start" data-exercise="release" type="button">Почати вправу <span>→</span></button>
+          </article>
+
+          <article class="exercise-card">
+            <div class="exercise-meta"><span>1 хв</span><span>Флешбек · дезорієнтація</span></div>
+            <div class="exercise-symbol">⌖</div>
+            <h2>Я тут, зараз</h2>
+            <p>Назви місце, дату й ознаки того, що теперішній момент відрізняється від спогаду.</p>
+            <button class="exercise-start" data-exercise="orienting" type="button">Почати вправу <span>→</span></button>
+          </article>
+        </div>
+
+        <div class="exercise-footer">
+          <p>Вправи можуть трохи зменшити інтенсивність стану, але не лікують панічний розлад чи ПТСР. Якщо напади повторюються або змінюють твоє життя, варто поговорити з фахівцем.</p>
+          <button class="secondary-button" data-go="help" type="button">Знайти живу допомогу</button>
+        </div>
       </section>
 
       <section class="screen" id="help" aria-labelledby="helpTitle">
@@ -197,6 +258,7 @@
     <nav class="bottom-nav" aria-label="Основна навігація">
       <button class="active" data-go="home"><span>⌂</span>Головна</button>
       <button data-go="chat"><span>◌</span>Розмова</button>
+      <button data-go="exercises"><span>◎</span>Вправи</button>
       <button data-go="help"><span>+</span>Допомога</button>
       <button data-go="about"><span>i</span>Про сервіс</button>
     </nav>
@@ -219,6 +281,25 @@
   </div>
 
   <div class="toast" id="toast" role="status"></div>
+
+  <div class="modal-backdrop" id="exerciseModal" hidden>
+    <section class="exercise-modal" role="dialog" aria-modal="true" aria-labelledby="exerciseModalTitle">
+      <button class="modal-close" id="closeExercise" aria-label="Закрити вправу">×</button>
+      <div class="exercise-progress"><span id="exerciseProgress"></span></div>
+      <span class="section-kicker" id="exerciseKicker">Вправа</span>
+      <h2 id="exerciseModalTitle">Повільний видих</h2>
+      <div class="exercise-visual" id="exerciseVisual" aria-hidden="true">
+        <span id="exerciseVisualText">Вдих</span>
+      </div>
+      <p class="exercise-instruction" id="exerciseInstruction"></p>
+      <p class="exercise-counter" id="exerciseCounter" aria-live="polite"></p>
+      <div class="exercise-controls">
+        <button class="secondary-button" id="exerciseBack" type="button">Назад</button>
+        <button class="primary-button" id="exerciseNext" type="button">Далі <span>→</span></button>
+      </div>
+      <button class="exercise-stop" id="exerciseStop" type="button">Зупинити вправу</button>
+    </section>
+  </div>
 
   <script src="app.js"></script>
 </body>

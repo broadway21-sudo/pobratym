@@ -5,7 +5,52 @@ const chatInput = document.querySelector("#chatInput");
 const chatForm = document.querySelector("#chatForm");
 const quickReplies = document.querySelector("#quickReplies");
 const crisisModal = document.querySelector("#crisisModal");
+const exerciseModal = document.querySelector("#exerciseModal");
 const toast = document.querySelector("#toast");
+const exerciseTitle = document.querySelector("#exerciseModalTitle");
+const exerciseInstruction = document.querySelector("#exerciseInstruction");
+const exerciseCounter = document.querySelector("#exerciseCounter");
+const exerciseProgress = document.querySelector("#exerciseProgress");
+const exerciseVisual = document.querySelector("#exerciseVisual");
+const exerciseVisualText = document.querySelector("#exerciseVisualText");
+const exerciseNext = document.querySelector("#exerciseNext");
+const exerciseBack = document.querySelector("#exerciseBack");
+
+const exercises = {
+  grounding: {
+    title: "Заземлення 5–4–3–2–1",
+    steps: [
+      ["5 речей, які бачиш", "Повільно озирнися і назви п’ять предметів. Колір, форма, відстань — будь-яка деталь.", "5"],
+      ["4 відчуття тіла", "Назви чотири відчуття: стопи в черевиках, спина на опорі, тканина на шкірі, температура повітря.", "4"],
+      ["3 звуки, які чуєш", "Прислухайся до трьох звуків — близьких або далеких. Не треба вгадувати їх джерело.", "3"],
+      ["2 запахи", "Назви два запахи. Якщо не відчуваєш — згадай два знайомі безпечні запахи.", "2"],
+      ["1 смак або повільний видих", "Поміть смак у роті або зроби один звичайний вдих і м’який довший видих.", "1"]
+    ]
+  },
+  release: {
+    title: "Опора для тіла",
+    steps: [
+      ["Відчуй стопи", "Постав обидві стопи на поверхню. Не тисни сильно — просто поміть, що вона тебе тримає.", "↧"],
+      ["Натисни й відпусти", "Легко притисни стопи до підлоги на 5 секунд, потім повністю відпусти. Без болю.", "5"],
+      ["Опусти плечі", "Дозволь плечам опуститися на кілька міліметрів. Розтисни щелепу й долоні.", "↓"],
+      ["Озирнися", "Знайди очима двері або вихід, джерело світла і один нерухомий предмет.", "⌖"]
+    ]
+  },
+  orienting: {
+    title: "Я тут, зараз",
+    steps: [
+      ["Назви місце", "Скажи подумки або вголос: «Я зараз у…». Назви місто, кімнату чи інше безпечне для тебе місце.", "1"],
+      ["Назви час", "Назви сьогоднішню дату або хоча б рік, пору доби й день тижня.", "2"],
+      ["Знайди відмінності", "Назви три ознаки, які показують, що це теперішній момент, а не спогад.", "3"],
+      ["Обери наступну дію", "Що допоможе в найближчі 5 хвилин: вода, світло, свіже повітря чи людина поруч?", "→"]
+    ]
+  }
+};
+
+let activeExercise = null;
+let exerciseStep = 0;
+let breathingTimer = null;
+let breathingCycles = 0;
 
 const crisisPatterns = [
   /не хочу жити/i,
@@ -99,6 +144,9 @@ document.addEventListener("click", (event) => {
   if (messageButton) sendMessage(messageButton.dataset.message);
 
   if (event.target.closest("[data-open-crisis]")) openCrisis();
+
+  const exerciseButton = event.target.closest("[data-exercise]");
+  if (exerciseButton) openExercise(exerciseButton.dataset.exercise);
 });
 
 function addMessage(textParts, sender = "assistant") {
@@ -219,6 +267,132 @@ function closeCrisis() {
   document.body.style.overflow = "";
 }
 
+function openExercise(name) {
+  activeExercise = name;
+  exerciseStep = 0;
+  breathingCycles = 0;
+  exerciseModal.hidden = false;
+  document.body.style.overflow = "hidden";
+  renderExercise();
+  document.querySelector("#closeExercise").focus();
+}
+
+function closeExercise() {
+  clearTimeout(breathingTimer);
+  breathingTimer = null;
+  activeExercise = null;
+  exerciseModal.hidden = true;
+  document.body.style.overflow = "";
+  exerciseVisual.className = "exercise-visual";
+}
+
+function renderExercise() {
+  clearTimeout(breathingTimer);
+  exerciseVisual.className = "exercise-visual";
+
+  if (activeExercise === "breathing") {
+    exerciseTitle.textContent = "Повільний видих";
+    exerciseProgress.style.width = `${Math.min((breathingCycles / 6) * 100, 100)}%`;
+    exerciseBack.disabled = true;
+    exerciseNext.textContent = breathingCycles >= 6 ? "Завершити" : "Пропустити цикл";
+    runBreathingPhase("in");
+    return;
+  }
+
+  const exercise = exercises[activeExercise];
+  const [heading, instruction, symbol] = exercise.steps[exerciseStep];
+  exerciseTitle.textContent = exercise.title;
+  exerciseInstruction.textContent = `${heading}. ${instruction}`;
+  exerciseCounter.textContent = `Крок ${exerciseStep + 1} з ${exercise.steps.length}`;
+  exerciseVisualText.textContent = symbol;
+  exerciseProgress.style.width = `${((exerciseStep + 1) / exercise.steps.length) * 100}%`;
+  exerciseBack.disabled = exerciseStep === 0;
+  exerciseNext.innerHTML = exerciseStep === exercise.steps.length - 1 ? "Завершити" : "Далі <span>→</span>";
+}
+
+function runBreathingPhase(phase) {
+  const duration = phase === "in" ? 4 : 6;
+  exerciseInstruction.textContent = phase === "in"
+    ? "М’яко вдихай носом. Не намагайся набрати якомога більше повітря."
+    : "Повільно видихай через злегка стиснуті губи. Нехай видих буде довшим.";
+  exerciseVisualText.textContent = phase === "in" ? "Вдих" : "Видих";
+  exerciseVisual.className = `exercise-visual ${phase === "in" ? "breathe-in" : "breathe-out"}`;
+
+  let seconds = duration;
+  exerciseCounter.textContent = `${seconds} с · цикл ${Math.min(breathingCycles + 1, 6)} з 6`;
+  const tick = () => {
+    seconds -= 1;
+    if (seconds > 0) {
+      exerciseCounter.textContent = `${seconds} с · цикл ${Math.min(breathingCycles + 1, 6)} з 6`;
+      breathingTimer = setTimeout(tick, 1000);
+      return;
+    }
+
+    if (phase === "in") {
+      exerciseVisual.className = "exercise-visual";
+      void exerciseVisual.offsetWidth;
+      runBreathingPhase("out");
+    } else {
+      breathingCycles += 1;
+      exerciseProgress.style.width = `${Math.min((breathingCycles / 6) * 100, 100)}%`;
+      if (breathingCycles >= 6) {
+        exerciseInstruction.textContent = "Готово. Повернись до звичайного дихання й поміть, чи змінилася інтенсивність стану хоча б трохи.";
+        exerciseCounter.textContent = "6 циклів завершено";
+        exerciseVisualText.textContent = "✓";
+        exerciseVisual.className = "exercise-visual";
+        exerciseNext.textContent = "Завершити";
+      } else {
+        exerciseVisual.className = "exercise-visual";
+        void exerciseVisual.offsetWidth;
+        runBreathingPhase("in");
+      }
+    }
+  };
+  breathingTimer = setTimeout(tick, 1000);
+}
+
+exerciseNext.addEventListener("click", () => {
+  if (!activeExercise) return;
+
+  if (activeExercise === "breathing") {
+    if (breathingCycles >= 6) closeExercise();
+    else {
+      clearTimeout(breathingTimer);
+      breathingCycles += 1;
+      if (breathingCycles >= 6) {
+        renderExercise();
+      } else {
+        renderExercise();
+      }
+    }
+    return;
+  }
+
+  const steps = exercises[activeExercise].steps;
+  if (exerciseStep >= steps.length - 1) {
+    closeExercise();
+    showToast("Вправу завершено. Поміть, як ти зараз");
+  } else {
+    exerciseStep += 1;
+    renderExercise();
+  }
+});
+
+exerciseBack.addEventListener("click", () => {
+  if (!activeExercise) return;
+
+  if (activeExercise !== "breathing" && exerciseStep > 0) {
+    exerciseStep -= 1;
+    renderExercise();
+  }
+});
+
+document.querySelector("#closeExercise").addEventListener("click", closeExercise);
+document.querySelector("#exerciseStop").addEventListener("click", closeExercise);
+exerciseModal.addEventListener("click", (event) => {
+  if (event.target === exerciseModal) closeExercise();
+});
+
 document.querySelector("#closeCrisis").addEventListener("click", closeCrisis);
 document.querySelector("#stayInChat").addEventListener("click", () => {
   closeCrisis();
@@ -229,6 +403,7 @@ crisisModal.addEventListener("click", (event) => {
 });
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !crisisModal.hidden) closeCrisis();
+  if (event.key === "Escape" && !exerciseModal.hidden) closeExercise();
 });
 
 document.querySelector("#privacyButton").addEventListener("click", () => {

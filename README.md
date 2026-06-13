@@ -1,35 +1,72 @@
-# Побратим
+# Pobratym / Побратим
 
-Мобільний вебпрототип приватного сервісу підтримки для військових, ветеранів та їхніх близьких.
+**A privacy-first mental health support prototype for Ukrainian service members, veterans, and their families.**
 
-## Що вже працює
+Pobratym is an open-source web prototype designed to provide a calm first point of contact when someone needs to talk, ground themselves during anxiety, or find verified human support.
 
-- приватний демонстраційний чат без акаунта і серверного збереження;
-- відповіді на типові стани: тривога, безсоння, злість, втрата, провина;
-- кризове розпізнавання фраз про самопошкодження українською та російською;
-- швидкий виклик `112`, `103` і лінії Українського ветеранського фонду;
-- каталог перевіреної допомоги;
-- адаптивний інтерфейс для телефона та комп'ютера.
+> Pobratym is not a therapist, medical device, emergency service, or replacement for professional care.
 
-## Запуск
+## Why this project exists
 
-Відкрийте `index.html` у браузері або запустіть локальний статичний сервер:
+Russia's war against Ukraine has created a long-term need for accessible, stigma-aware psychological support. Many people need a low-friction place to speak before they are ready or able to contact a specialist.
+
+The project focuses on:
+
+- supportive conversation without judgment;
+- clear crisis escalation to human help;
+- minimal collection of personal data;
+- Ukrainian-first language and context;
+- accessibility on low-cost mobile devices;
+- transparent, auditable open-source development.
+
+## Current prototype
+
+- Ukrainian mobile-first interface;
+- local demo conversation flows for anxiety, insomnia, grief, anger, and guilt;
+- Ukrainian and Russian crisis phrase detection;
+- one-tap access to `112`, `103`, and the Ukrainian Veterans Fund crisis line;
+- directory of verified support resources;
+- no accounts, analytics, or server-side conversation storage.
+
+## Run locally
+
+Open `index.html` directly, or start any static server:
 
 ```powershell
 python -m http.server 8000
 ```
 
-Потім відкрийте `http://localhost:8000`.
+Then visit `http://localhost:8000`.
 
-## Важлива межа прототипу
+## Project status
 
-Поточний чат використовує локальні сценарії у `app.js`. Він демонструє UX і кризовий маршрут, але не є медичним виробом, психотерапією чи готовою системою для реальної експлуатації.
+This repository currently contains a UX and safety-routing prototype. The conversational responses in `app.js` are deterministic local scenarios, not a production AI system.
 
-Перед публічним запуском потрібні:
+See:
 
-- клінічний і юридичний аудит;
-- інтеграція із захищеним ШІ-бекендом та модерацією;
-- політика приватності й модель згоди;
-- перевірка контактів допомоги за регіонами;
-- моніторинг якості та процедура ескалації до живого фахівця;
-- тестування з військовими, ветеранами та кризовими психологами.
+- [Roadmap](ROADMAP.md)
+- [Safety policy](SAFETY.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Contributing guide](CONTRIBUTING.md)
+
+## Before real-world deployment
+
+A public service would require:
+
+- clinical and legal review in Ukraine;
+- a secure backend with strict data minimization;
+- professionally reviewed crisis detection and response;
+- continuously verified regional support contacts;
+- human escalation procedures;
+- abuse prevention and quality monitoring;
+- testing with service members, veterans, families, and crisis psychologists.
+
+## Contributing
+
+Contributions from engineers, designers, accessibility specialists, Ukrainian translators, veterans, and qualified mental health professionals are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+For safety-sensitive problems, do not publish personal crisis details in a GitHub issue. Follow [SAFETY.md](SAFETY.md).
+
+## License
+
+No production-use license has been selected yet. Until one is added, the repository is available for review and contribution but should not be treated as cleared for deployment.
